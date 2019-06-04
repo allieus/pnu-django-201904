@@ -12,8 +12,14 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+
+    # comment_list = post.comment_set.all()
+    # # comment_list = Comment.objects.filter(post=post)
+    # comment_list = comment_list.order_by('-id')
+
     return render(request, 'travel/post_detail.html', {
         'post': post,
+        # 'comment_list': comment_list,
     })
 
 
