@@ -28,6 +28,9 @@
             {{ comment.message }}
             by {{ comment.author }}
             at {{ comment.created_at }}
+            <a href="{% url 'travel:comment_edit' post.pk comment.pk %}">
+                Edit
+            </a>
         </li>
     {% endfor %}
     </ul>

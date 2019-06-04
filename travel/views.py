@@ -40,3 +40,19 @@ def comment_new(request, post_pk):
         form = CommentForm()
 
     return render(request, 'travel/comment_form.html', {'form': form})
+
+
+@login_required
+def comment_edit(request, post_pk, pk):
+    comment = get_object_or_404(Comment, author=request.user, pk=pk)
+    # if comment.author != request.user:
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('travel:post_detail', post_pk)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'travel/comment_form.html', {'form': form})
