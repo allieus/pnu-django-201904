@@ -24,7 +24,7 @@
 
     <ul>
     {% for comment in post.comment_set.all %}
-        <li>
+        <li id="comment-{{ comment.pk }}">
             {{ comment.message }}
             by {{ comment.author }}
             at {{ comment.created_at }}
@@ -32,7 +32,9 @@
                 <a href="{% url 'travel:comment_edit' post.pk comment.pk %}">
                     Edit
                 </a>
-                <a href="{% url 'travel:comment_delete' post.pk comment.pk %}" class="text-danger">
+                <a href="{% url 'travel:comment_delete' post.pk comment.pk %}"
+                   data-target-id="comment-{{ comment.pk }}"
+                   class="text-danger comment-delete-btn">
                     Delete
                 </a>
             {% endif %}
@@ -56,9 +58,22 @@
     <script>
         $(function() {
             // 문서가 준비되었을 때 호출
+            $('.comment-delete-btn').click(function() {
+                var url = $(this).attr('href');
+                console.log("url :", url);
+                var target_id = $(this).data('target-id');
+                if ( confirm("Are you sure?") ) {
+                    // TODO: comment_delete 뷰에 POST 요청 보내기
+                    // $.post(url).done(function() {
+                        $('#' + target_id).remove();
+                    // });
+                }
+                return false;
+            });
+
             $("#test_btn").click(function() {
                 console.log("clicked");
-                $("li").remove();
+                // $("li").remove();
             });
 
             for(var i=0; i<10; i++) {
