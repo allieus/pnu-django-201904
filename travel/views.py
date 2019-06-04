@@ -56,3 +56,14 @@ def comment_edit(request, post_pk, pk):
         form = CommentForm(instance=comment)
 
     return render(request, 'travel/comment_form.html', {'form': form})
+
+
+@login_required
+def comment_delete(request, post_pk, pk):
+    comment = get_object_or_404(Comment, author=request.user, pk=pk)
+    if request.method == 'POST':
+        comment.delete()  # 호출 즉시 DELETE 쿼리 수행
+        return redirect('travel:post_detail', post_pk)
+    return render(request, 'travel/post_confirm_delete.html', {
+        'comment': comment,
+    })
