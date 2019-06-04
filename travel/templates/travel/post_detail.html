@@ -1,40 +1,44 @@
+{% extends "travel/layout.html" %}
+{% load bootstrap4 %}
 
-<h1>Travel: Post #{{ post.pk }}</h1>
+{% block content %}
+    <h1>Travel: Post #{{ post.pk }}</h1>
 
-<h2>{{ post.title }}</h2>
+    <h2>{{ post.title }}</h2>
 
-{% if post.photo %}
-    <div>
-        <img src="{{ post.photo.url }}" style="max-width: 100%;" />
-    </div>
-{% endif %}
+    {% if post.photo %}
+        <div>
+            <img src="{{ post.photo.url }}" style="max-width: 100%;" />
+        </div>
+    {% endif %}
 
-{{ post.content }}
+    {{ post.content }}
 
-<hr/>
+    <hr/>
 
-<form action="{% url 'travel:comment_new' post.pk %}" method="post">
-    {% csrf_token %}
-    {{ comment_form.message }}
-    <input type="submit" value="댓글 쓰기" />
-</form>
+    <form action="{% url 'travel:comment_new' post.pk %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <input type="submit" value="댓글 쓰기" class="btn btn-primary btn-block" />
+    </form>
 
-<ul>
-{% for comment in post.comment_set.all %}
-    <li>
-        {{ comment.message }}
-        by {{ comment.author }}
-        at {{ comment.created_at }}
-    </li>
-{% endfor %}
-</ul>
+    <ul>
+    {% for comment in post.comment_set.all %}
+        <li>
+            {{ comment.message }}
+            by {{ comment.author }}
+            at {{ comment.created_at }}
+        </li>
+    {% endfor %}
+    </ul>
 
-<hr/>
+    <hr/>
 
-<a href="{% url 'travel:comment_new' post.pk %}">
-    댓글 쓰기
-</a>
+    <a href="{% url 'travel:comment_new' post.pk %}">
+        댓글 쓰기
+    </a>
 
-<a href="{% url 'travel:post_list' %}">
-    목록으로
-</a>
+    <a href="{% url 'travel:post_list' %}">
+        목록으로
+    </a>
+{% endblock %}
