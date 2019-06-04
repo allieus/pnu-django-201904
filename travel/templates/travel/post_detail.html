@@ -50,3 +50,20 @@
         목록으로
     </a>
 {% endblock %}
+
+{% block extra_body %}
+    <button id="test_btn">테스트</button>
+    <script>
+        $(function() {
+            // 문서가 준비되었을 때 호출
+            $("#test_btn").click(function() {
+                console.log("clicked");
+                $("li").remove();
+            });
+
+            for(var i=0; i<10; i++) {
+                console.log("loaded");
+            }
+        });
+    </script>
+{% endblock %}
