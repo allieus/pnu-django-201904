@@ -13,6 +13,12 @@
 
 <hr/>
 
+<form action="{% url 'travel:comment_new' post.pk %}" method="post">
+    {% csrf_token %}
+    {{ comment_form.message }}
+    <input type="submit" value="댓글 쓰기" />
+</form>
+
 <ul>
 {% for comment in post.comment_set.all %}
     <li>

@@ -20,6 +20,7 @@ def post_detail(request, pk):
     return render(request, 'travel/post_detail.html', {
         'post': post,
         # 'comment_list': comment_list,
+        'comment_form': CommentForm(),
     })
 
 
