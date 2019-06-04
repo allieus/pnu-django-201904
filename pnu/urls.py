@@ -13,6 +13,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('weblog/', include('blog.urls')),
     path('shop/', include('shop.urls')),
+    path('travel/', include('travel.urls')),
     path('', root, name='root'),
 ]
 
