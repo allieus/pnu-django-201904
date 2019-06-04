@@ -64,9 +64,9 @@
                 var target_id = $(this).data('target-id');
                 if ( confirm("Are you sure?") ) {
                     // TODO: comment_delete 뷰에 POST 요청 보내기
-                    // $.post(url).done(function() {
+                    $.post(url).done(function() {
                         $('#' + target_id).remove();
-                    // });
+                    });
                 }
                 return false;
             });
