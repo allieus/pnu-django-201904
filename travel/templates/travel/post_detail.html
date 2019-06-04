@@ -13,6 +13,18 @@
 
 <hr/>
 
+<ul>
+{% for comment in post.comment_set.all %}
+    <li>
+        {{ comment.message }}
+        by {{ comment.author }}
+        at {{ comment.created_at }}
+    </li>
+{% endfor %}
+</ul>
+
+<hr/>
+
 <a href="{% url 'travel:post_list' %}">
     목록으로
 </a>
