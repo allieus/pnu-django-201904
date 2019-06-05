@@ -11,7 +11,7 @@ def post_new(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save()
-            return redirect('travel:post_detail', post.pk)
+            return redirect(post)
             # return redirect(post)  # Post모델에 get_absolute_url이 구현
     else:
         form = PostForm()
@@ -25,7 +25,7 @@ def post_edit(request, pk):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
-            return redirect('travel:post_detail', post.pk)
+            return redirect(post)
             # return redirect(post)  # Post모델에 get_absolute_url이 구현
     else:
         form = PostForm(instance=post)
@@ -86,7 +86,7 @@ def comment_new(request, post_pk):
             comment.author = request.user
             comment.post = post
             comment.save()
-            return redirect('travel:post_detail', post_pk)
+            return redirect(post)
     else:
         form = CommentForm()
 
@@ -101,8 +101,8 @@ def comment_edit(request, post_pk, pk):
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
-            form.save()
-            return redirect('travel:post_detail', post_pk)
+            post = form.save()
+            return redirect(post)
     else:
         form = CommentForm(instance=comment)
 
