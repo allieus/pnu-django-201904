@@ -1,7 +1,23 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post, Comment
-from .forms import CommentForm
+from .forms import PostForm, CommentForm
+
+
+def post_new(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save()
+            return redirect('travel:post_detail', post.pk)
+            # return redirect(post)  # Post모델에 get_absolute_url이 구현
+    else:
+        form = PostForm()
+    return render(request, 'travel/post_form.html', {'form': form})
+
+
+def post_edit(request, pk):
+    pass
 
 
 def post_list(request):

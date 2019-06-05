@@ -3,7 +3,9 @@
 
 {% block content %}
     <div class="card">
-        <img src="{{ post.photo.url }}" class="card-img-top" alt="...">
+        {% if post.photo %}
+            <img src="{{ post.photo.url }}" class="card-img-top" alt="...">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">
