@@ -38,26 +38,7 @@
                 <th>Control</th>
             </tr>
         </thead>
-        <tbody>
-            {% for comment in post.comment_set.all %}
-                <tr id="comment-{{ comment.pk }}">
-                    <td>{{ comment.message }}</td>
-                    <td>{{ comment.author }}</td>
-                    <td>{{ comment.created_at }}</td>
-                    <td>
-                        {% if comment.author == user %}
-                            <a href="{% url 'travel:comment_edit' post.pk comment.pk %}" class="btn btn-sm btn-primary">
-                                Edit
-                            </a>
-                            <a href="{% url 'travel:comment_delete' post.pk comment.pk %}"
-                            data-target-id="comment-{{ comment.pk }}"
-                            class="comment-delete-btn btn btn-sm btn-danger">
-                                Delete
-                            </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+        <tbody id="comment_list">
         </tbody>
     </table>
 
@@ -66,6 +47,10 @@
 {% block extra_body %}
     <script>
         $(function() {
+            $.get("{% url 'travel:comment_list' post.pk %}").done(function(resp) {
+                $("#comment_list").html(resp);
+            });
+
             // 문서가 준비되었을 때 호출
             $('.comment-delete-btn').click(function() {
                 var url = $(this).attr('href');

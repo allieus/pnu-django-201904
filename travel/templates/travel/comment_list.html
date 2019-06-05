@@ -1,0 +1,19 @@
+{% for comment in comment_list %}
+    <tr id="comment-{{ comment.pk }}">
+        <td>{{ comment.message }}</td>
+        <td>{{ comment.author }}</td>
+        <td>{{ comment.created_at }}</td>
+        <td>
+            {% if comment.author == user %}
+                <a href="{% url 'travel:comment_edit' post.pk comment.pk %}" class="btn btn-sm btn-primary">
+                    Edit
+                </a>
+                <a href="{% url 'travel:comment_delete' post.pk comment.pk %}"
+                data-target-id="comment-{{ comment.pk }}"
+                class="comment-delete-btn btn btn-sm btn-danger">
+                    Delete
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
