@@ -14,7 +14,7 @@
         </div>
         <div class="card-footer">
             <a href="{% url 'travel:post_list' %}" class="btn btn-sm btn-secondary">목록</a>
-            <a href="#" class="btn btn-sm btn-primary">수정</a>
+            <a href="{% url 'travel:post_edit' post.pk %}" class="btn btn-sm btn-primary">수정</a>
             <a href="#" class="btn btn-sm btn-danger">삭제</a>
         </div>
     </div>

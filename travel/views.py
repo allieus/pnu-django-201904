@@ -17,7 +17,17 @@ def post_new(request):
 
 
 def post_edit(request, pk):
-    pass
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save()
+            return redirect('travel:post_detail', post.pk)
+            # return redirect(post)  # Post모델에 get_absolute_url이 구현
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'travel/post_form.html', {'form': form})
 
 
 def post_list(request):
