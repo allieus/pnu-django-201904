@@ -29,6 +29,8 @@
 
     <a href="#" class="btn btn-success btn-block mb-3">새로고침</a>  {# TODO: 구현 #}
 
+    <div data-ax5grid="first-grid" data-ax5grid-config="{}" style="height: 300px;"></div>
+
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -47,13 +49,27 @@
 {% block extra_body %}
     <script>
         $(function() {
+            var firstGrid = new ax5.ui.grid();
+            firstGrid.setConfig({
+                target: $('[data-ax5grid="first-grid"]'),
+                columns: [
+                    {key: "pk", label: "Primary Key"},
+                    {key: "message", label: "Message"},
+                    {key: "author", label: "Author"},
+                    {key: "created_at", label: "Created at"}
+                ]
+            });
+
             $.get("{% url 'travel:comment_list' post.pk %}").done(function(resp) {
                 var comment_list = resp;
+                firstGrid.setData(comment_list);
 
+                /*
                 $.each(comment_list, function(index, comment) {
                     var html = "<tr><td>" + comment.message + "</td></tr>";
                     $('#comment_list').append(html);
                 })
+                */
 
                 // $("#comment_list").html(resp);
             });
