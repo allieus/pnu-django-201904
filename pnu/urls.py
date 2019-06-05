@@ -4,9 +4,14 @@ from django.contrib import admin
 from django.urls import include, path
 
 # FIXME: 이 코드는 RedirectView에 의해서 제거될 것입니다.
-from django.shortcuts import redirect
+from django.shortcuts import render, resolve_url
 def root(request):
-    return redirect("shop:shop_list")
+    앱_소개 = [
+        {"주소": resolve_url("blog:post_list"), "설명": "블로그 서비스입니다"},
+        {"주소": resolve_url("shop:shop_list"), "설명": "가게 소개 서비스입니다"},
+        {"주소": resolve_url("travel:post_list"), "설명": "여행 서비스입니다"},
+    ]
+    return render(request, 'root.html', {'앱_소개': 앱_소개})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
