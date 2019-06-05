@@ -4,6 +4,8 @@ django-debug-toolbar~=1.11.0
 django-bootstrap4
 pillow
 
+django-summernote
+
 django-heroku
 gunicorn
 psycopg2

@@ -15,6 +15,7 @@ def root(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('summernote/', include('django_summernote.urls')),
     path('accounts/', include('accounts.urls')),
     path('weblog/', include('blog.urls')),
     path('shop/', include('shop.urls')),
