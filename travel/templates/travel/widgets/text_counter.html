@@ -1,0 +1,10 @@
+{% include "django/forms/widgets/input.html" %}
+
+<div id="{{ widget.attrs.id }}_counter"></div>
+
+<script>
+document.querySelector('#{{ widget.attrs.id }}').addEventListener('input', function() {
+    var label = this.value.length + '글자';
+    document.querySelector('#{{ widget.attrs.id }}_counter').innerHTML = label;
+});
+</script>
