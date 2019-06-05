@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+from .encoders import JSONEncoer
 
 
 def post_new(request):
@@ -33,8 +34,17 @@ def post_edit(request, pk):
 
 
 def post_list(request):
+    qs = Post.objects.all()
+    format = request.GET.get('format', None)
+
+    if format == 'json':
+        return JsonResponse(qs, encoder=JSONEncoer, safe=False)
+    elif format == 'pdf':
+        # ...
+        pass
+
     return render(request, 'travel/post_list.html', {
-        'post_list': Post.objects.all(),
+        'post_list': qs,
     })
 
 
@@ -55,19 +65,13 @@ def post_detail(request, pk):
 def comment_list(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     qs = Comment.objects.all().filter(post__pk=post_pk)
+    return JsonResponse(qs, encoder=JSONEncoer, safe=False)
 
     # message, author, created_at, pk
-    obj_list = [{  # List Comprehension
-        'pk': comment.pk,
-        'message': comment.message,
-        'author': str(comment.author),
-        'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-    } for comment in qs]
+    # obj_list = [comment.as_dict() for comment in qs]
 
     # json_string = json.dumps(obj_list, ensure_ascii=False)
     # return HttpResponse(json_string)
-
-    return JsonResponse(obj_list, safe=False)
 
     # return render(request, 'travel/comment_list.html', {
     #     'post': post,

@@ -16,6 +16,13 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('travel:post_detail', args=[self.pk])
+    
+    def as_dict(self):
+        return {
+            'pk': self.pk,
+            'title': self.title,
+            'content': self.content,
+        }
 
 
 class Comment(models.Model):
@@ -28,3 +35,11 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-id']
+    
+    def as_dict(self):
+        return {
+            'pk': self.pk,
+            'message': self.message,
+            'author': str(self.author),
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+        }
