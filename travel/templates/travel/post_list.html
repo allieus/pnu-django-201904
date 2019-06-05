@@ -2,16 +2,28 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <h1>Travel: Post List</h1>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Travel</h1>
+        <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+    </div>
 
-    <ul>
-    {% for post in post_list %}
-        <li>
-            #{{ post.pk }}
-            <a href="{% url 'travel:post_detail' post.pk %}">
-                {{ post.title }}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="row">
+        {% for post in post_list %}
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">World</strong>
+                        <h3 class="mb-0">{{ post.title }}</h3>
+                        <div class="mb-1 text-muted">{{ post.created_at|date:"M. Y" }}</div>
+                        <p class="card-text mb-auto">{{ post.content|truncatewords:10 }}</p>
+                        <a href="{% url 'travel:post_detail' post.pk %}" class="stretched-link">Continue reading</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="{{ post.photo.url }}" width="200" height="250" />
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}
